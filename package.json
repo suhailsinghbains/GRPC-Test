@@ -1,0 +1,16 @@
+{
+  "name": "grpc_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node server/index.js",
+    "run": "node client/node/index.js"    
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "grpc": "^1.8.0",
+    "grpcli": "^0.7.5"
+  }
+}
