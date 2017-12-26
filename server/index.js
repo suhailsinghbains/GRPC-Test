@@ -2,41 +2,46 @@ const grpc = require('grpc');
 
 const proto = grpc.load('proto/work_leave.proto');
 const server = new grpc.Server();
-
-//define the callable methods that correspond to the methods defined in the protofile
-server.addProtoService(proto.work_leave.EmployeeLeaveDaysService.service, {
-  /**
-  Check if an employee is eligible for leave.
-  True If the requested leave days are greater than 0 and within the number
-  of accrued days.
-  */
-  eligibleForLeave(call, callback) {
-    if (call.request.requested_leave_days > 0) {
-      if (call.request.accrued_leave_days > call.request.requested_leave_days) {
-        callback(null, { eligible: true });
-      } else {
-        callback(null, { eligible: false });
-      }-1
-    } else {
-      callback(new Error('Invalid requested days'));
-    }
+var flag = 0;
+const Students = {
+  1:{
+    "name": 'Suhail'
   },
-
-  /**
-  Grant an employee leave days
-  */
-  grantLeave(call, callback) {
-    let granted_leave_days = call.request.requested_leave_days;
-    let accrued_leave_days = call.request.accrued_leave_days - granted_leave_days;
-
-    callback(null, {
-      granted: true,
-      granted_leave_days,
-      accrued_leave_days
-    });
+  2:{
+    "name": 'Ramesh'
+  },
+  3:{
+    "name": 'Aleix'
+  },
+  4:{
+    "name": 'Don'
+  },
+  5:{
+    "name": 'JSON'
+  }
+}
+server.addProtoService(proto.work_leave.validation_Student.service,{
+  search_for_roll_no(call, callback){
+    if(call.request.roll_no<=0){
+      callback(new Error('Invalid Roll No'));
+    }
+    var i = 1;
+    for(;i<Students.length;i++){
+      if(i==call.request.roll_no){
+        flag = 1;
+        if(call.request.name==Students[i]["name"]){
+          callback(null, {value: true});
+        }
+        else {
+          callback(null, {value:false});
+        }
+      }
+    }
+    if(flag){
+      callback(new Error('Roll No not found'));
+    }
   }
 });
-
 //Specify the IP and and port to start the grpc Server, no SSL in test environment
 server.bind('0.0.0.0:50050', grpc.ServerCredentials.createInsecure());
 
