@@ -4,36 +4,45 @@ const protoPath = require('path').join(__dirname, '../..', 'proto');
 const proto = grpc.load({root: protoPath, file: 'work_leave.proto' });
 
 //Create a new client instance that binds to the IP and port of the grpc server.
-const client = new proto.work_leave.validation_Student('localhost:50050', grpc.credentials.createInsecure());
-
-const student_to_be_checked={
-  isThere:{
-    roll_no: 1,
-    name: 'Suhail'
+const client = new proto.work_leave.get_phrase('localhost:50050', grpc.credentials.createInsecure());
+var date = new Date();
+const time_to_be_checked={
+  morning:{
+    "hour": 11
   },
-  notThere:{
-    roll_no: 10,
-    name: 'Ramesh'
+  afternoon:{
+    "hour": 14
   },
-  inValid:{
-    roll_no: 2,
-    name: 'Test'
+  evening:{
+    "hour": 17
   },
-  illegal:{
-    roll_no: -1,
-    name: 'Test'
+  night:{
+    "hour": 22
+  },
+  test:{
+    "hour": 21
   }
 }
-client.search_for_roll_no(student_to_be_checked.isThere, (error, response) =>{
+//date.getHours() --> gives the user's current time(hour)
+//For Testing: use time_to_be_checked.(test_case)
+client.catch_Phrase(date.getHours(), (error, response) =>{
   if(!error){
-    if(response.value){
-      console.log('Student Found');
-    }
-    else {
-      console.log('Roll no found but, Student name not found');
+    switch(response.value){
+      case 1:
+        console.log("Good Morning");
+        break;
+      case 2:
+        console.log("Good Afternoon");
+        break;
+      case 3:
+        console.log("Good Evening");
+        break;
+      case 4:
+        console.log("Good Night");
+        break;
     }
   }
   else {
-    console.log("Error: ",error.message);
+    console.log(error.message);
   }
 });

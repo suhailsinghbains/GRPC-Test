@@ -2,43 +2,17 @@ const grpc = require('grpc');
 
 const proto = grpc.load('proto/work_leave.proto');
 const server = new grpc.Server();
-var flag = 0;
-const Students = {
-  1:{
-    "name": 'Suhail'
-  },
-  2:{
-    "name": 'Ramesh'
-  },
-  3:{
-    "name": 'Aleix'
-  },
-  4:{
-    "name": 'Don'
-  },
-  5:{
-    "name": 'JSON'
-  }
-}
-server.addProtoService(proto.work_leave.validation_Student.service,{
-  search_for_roll_no(call, callback){
-    if(call.request.roll_no<=0){
-      callback(new Error('Invalid Roll No'));
-    }
-    var i = 1;
-    for(;i<Students.length;i++){
-      if(i==call.request.roll_no){
-        flag = 1;
-        if(call.request.name==Students[i]["name"]){
-          callback(null, {value: true});
-        }
-        else {
-          callback(null, {value:false});
-        }
-      }
-    }
-    if(flag){
-      callback(new Error('Roll No not found'));
+
+server.addProtoService(proto.work_leave.get_phrase.service,{
+  catch_Phrase(call, callback){
+    if(0<=call.request.hour&&call.request.hour<12){
+      callback(null,{value: 1});
+    }else if (call.request.hour<15) {
+      callback(null,{value: 2});
+    }else if (call.request.hour<21) {
+      callback(null,{value: 3});
+    }else {
+      callback(null,{value: 4});
     }
   }
 });

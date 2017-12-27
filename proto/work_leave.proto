@@ -2,13 +2,12 @@ syntax = "proto3"; //Specify proto3 version.
 
 package work_leave; //Optional: unique package name.
 
-service validation_Student {
-  rpc search_for_roll_no (test) returns (return_test);
+service get_phrase {
+  rpc catch_Phrase (test) returns (return_test);
 }
 message test{
-  int32 roll_no = 1;
-  string name = 2;
+  int32 hour = 1;
 }
 message return_test{
-  bool value = 1;
+  int32 value = 1;
 }
