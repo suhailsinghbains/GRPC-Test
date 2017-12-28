@@ -3,6 +3,14 @@ const grpc = require('grpc');
 const proto = grpc.load('proto/work_leave.proto');
 const server = new grpc.Server();
 
+/*
+  Considering the following statement before-hand:
+  Morning : 00:00 to 11:59
+  Afternoon : 12:00 to 14:59
+  Evening : 15:00 to 20:59
+  Night : 21:00 to 23:59
+*/
+
 server.addProtoService(proto.work_leave.get_phrase.service,{
   catch_Phrase(call, callback){
     if(0<=call.request.hour&&call.request.hour<12){
