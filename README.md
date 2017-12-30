@@ -2,7 +2,7 @@ GRPC Test:
 
 Learning and testing GRPC on nodejs.
 
-Cone This Repo: $ git clone https://github.com/suhailsinghbains/GRPC-Test.git
+Clone This Repo: $ git clone https://github.com/suhailsinghbains/GRPC-Test.git
 
 Install npm packages:
 $ npm install
