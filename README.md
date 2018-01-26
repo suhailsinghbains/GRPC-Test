@@ -1,22 +1,22 @@
-GRPC Test:
+# GRPC Test:
 
-Learning and testing GRPC on nodejs.
+Learning and testing GRPC on NodeJS.
 
 Clone This Repo: $ git clone https://github.com/suhailsinghbains/GRPC-Test.git
 
-Install npm packages:
-$ npm install
+1. Install npm packages:
+  - $ npm install
 
 
-Start the node server:
-$ node server/
-or
-$ npm test
+2. Start the node server:
+  - $ node server/
+    or
+    $ npm test
 
 Make an RPC call from one of the respective clients-->
-Run Node Client:
-$ node client/node
-or
-$ npm run-script run
+3. Run Node Client:
+  - $ node client/node
+    or
+    $ npm run-script run
 
-Note: These both should be running on different windows of the CLI
+- Note: These both (Client and Server) should be running on different windows of the CLI
